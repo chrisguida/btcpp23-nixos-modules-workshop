@@ -18,7 +18,7 @@ in
 
   ## Task 1
   services.bitcoind."regtest" = {
-    enable = false;
+    enable = true;
     rpc = {
       port = 18444;
       users.workshop = {
@@ -37,14 +37,22 @@ in
   services.your_app = {
     # FIXME: Task 2.3: declare the options your_app options defined in 2.1
     # Use `yourAppPort` as port.
-    enable = false;
+    port = 4242;
+    enable = true;
+    rpc = {
+      port = config.services.bitcoind."regtest".rpc.port;
+      host = "localhost";
+      pass = "btcpp23berlin";
+      user = "workshop";
+    };
   };
 
   # FIXME: 2.4: Open the firewall
+  networking.firewall.allowedTCPPorts = [ 4242 ];
 
   # Task 4
   virtualisation.oci-containers.containers = {
-    #"plaintext-hello" = {
+    #"plaintext-hello" = {your
       # FIXME: Task 4.2: declare `image` and `ports` options
     #};
   };
